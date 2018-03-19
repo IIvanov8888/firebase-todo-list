@@ -1,8 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 
 import { ItemService } from '../shared/item.service';
-import { AngularFireDatabase, AngularFireList, AngularFireObject } from 'angularfire2/database';
-import { AngularFirestore } from 'angularfire2/firestore';
+
 import { Item } from '../shared/item.model';
 
 import { Observable } from 'rxjs/Observable';
@@ -13,17 +12,20 @@ import { Observable } from 'rxjs/Observable';
   styleUrls: ['./items-list.component.scss'],
 })
 export class ItemsListComponent implements OnInit {
-  showSpinner = true;
-  items: Observable<any[]>;
-  constructor(db: AngularFirestore) {
-    this.items = db.collection('items').valueChanges();
-  }
 
-  /*constructor(private itemService: ItemService) {
-    this.items = this.itemService.getItemsList();
-  }
-  */
+  items: Observable<Item[]>;
+  content: string;
+
+  constructor(private noteService: ItemService) { }
 
   ngOnInit() {
+    this.items = this.noteService.getData();
+    // this.items = this.noteService.getSnapshot();
   }
+
+  createNote() {
+    this.noteService.create(this.content);
+    this.content = '';
+  }
+
 }

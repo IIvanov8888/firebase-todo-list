@@ -1,69 +1,60 @@
 import { Injectable } from '@angular/core';
 
-import { AngularFirestore, AngularFirestoreCollection } from 'angularfire2/firestore';
+import { AngularFirestore, AngularFirestoreCollection, AngularFirestoreDocument } from 'angularfire2/firestore';
 
 import { Item } from './item.model';
 
 import { Observable } from 'rxjs/Observable';
-import 'rxjs/add/operator/map';
+import { map } from 'rxjs/operators';
+
+interface NewItem {
+  title: string;
+  body: 0;
+  time: Date;
+}
 
 @Injectable()
 export class ItemService {
 
-  private basePath = '/items';
+  notesCollection: AngularFirestoreCollection<Item>;
+  noteDocument:   AngularFirestoreDocument<Node>;
 
-  private itemsCollection: AngularFirestoreCollection<Item>;
-  items: Observable<Item[]>;
-
-
-  constructor(private readonly db: AngularFirestore) {
-    this.itemsCollection = db.collection<Item>('items');
-    // .valueChanges() is simple. It just returns the
-    // JSON data without metadata. If you need the
-    // doc.id() in the value you must persist it your self
-    // or use .snapshotChanges() instead. See the addItem()
-    // method below for how to persist the id with
-    // valueChanges()
+  constructor(private afs: AngularFirestore) {
+    this.notesCollection = this.afs.collection('items', (ref) => ref.orderBy('time', 'desc').limit(5));
   }
 
-  // Return an observable list of Items
-  getItemsList(): Observable<Item[]> {
-    return this.items = this.itemsCollection.snapshotChanges().map(actions => {
-      return actions.map(a => {
+  getData(): Observable<Item[]> {
+    return this.notesCollection.valueChanges();
+  }
+
+  getSnapshot(): Observable<Item[]> {
+    // ['added', 'modified', 'removed']
+    return this.notesCollection.snapshotChanges().map((actions) => {
+      return actions.map((a) => {
         const data = a.payload.doc.data() as Item;
-        const id = a.payload.doc.id;
-        return { id, ...data };
+        return { id: a.payload.doc.id, title: data.title, body: data.body };
       });
     });
   }
 
-  // Create a brand new item
-  createItem(title: string, body: string): void {
-    // Persist a document id
-    const id = this.db.createId();
-    const item: Item = { id, title, body: body };
-    this.itemsCollection.add(item);
+  getNote(id: string) {
+    return this.afs.doc<Item>(`items/${id}`);
   }
 
-  // Update an exisiting item
-  updateItem(item: Item): void {
-    this.itemsCollection.doc(item.id).update({ title: !item.title });
+  create(content: string) {
+    const item = {
+      title: content,
+      body: content,
+      time: new Date()
+    };
+    return this.notesCollection.add(item);
   }
 
-  // Deletes a single item
-  deleteItem(item: Item): void {
-    this.itemsCollection.doc(item.id).delete();
+  updateNote(id: string, data: Partial<Item>) {
+    return this.getNote(id).update(data);
   }
 
-  /**
-   * @author Ivelin Ivanov
-   */
-  deleteAll(): void {
-    this.itemsCollection.doc(null).delete();
-  }
-
-  // Default error handling for all actions
-  private handleError(error: Error) {
-    console.error(error);
+  deleteNote(id: string) {
+    return this.getNote(id).delete();
   }
 }

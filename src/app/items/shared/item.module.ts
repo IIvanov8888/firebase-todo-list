@@ -2,7 +2,7 @@ import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-import { AngularFireDatabaseModule } from 'angularfire2/database';
+import { AngularFirestoreModule } from 'angularfire2/firestore';
 
 // import { SharedModule } from '../../shared/shared.module';
 
@@ -11,7 +11,6 @@ import { ItemService } from './item.service';
 import { AppMaterialModule } from '../../material/material.module';
 
 import { ItemsListComponent } from '../items-list/items-list.component';
-import { ItemFormComponent } from '../item-form/item-form.component';
 import { ItemDetailComponent } from '../item-detail/item-detail.component';
 
 @NgModule({
@@ -21,11 +20,10 @@ import { ItemDetailComponent } from '../item-detail/item-detail.component';
     // SharedModule,
     ReactiveFormsModule,
     FormsModule,
-    AngularFireDatabaseModule,
+    AngularFirestoreModule.enablePersistence(),
   ],
   declarations: [
     ItemsListComponent,
-    ItemFormComponent,
     ItemDetailComponent,
   ],
   providers: [
