@@ -10,8 +10,6 @@ import { AuthService} from '../../core/auth.service';
 })
 export class AppComponent implements OnDestroy {
   mobileQuery: MediaQueryList;
-  user: any;
-  currentUser: any;
 
   // fillerNav = Array(5).fill(0).map((_, i) => `Nav Item ${i + 1}`);
 
@@ -21,19 +19,33 @@ export class AppComponent implements OnDestroy {
     this.mobileQuery = media.matchMedia('(max-width: 600px)');
     this._mobileQueryListener = () => changeDetectorRef.detectChanges();
     this.mobileQuery.addListener(this._mobileQueryListener);
-
-    console.log(this.auth.user);
-    this.user = this.auth;
   }
+
+  /**
+   * @author Ivelin Ivanov
+   * @param {}
+   * @description login the user
+   */
 
   login() {
-    this.currentUser = this.auth.googleLogin();
-    console.log(this.currentUser);
+    this.auth.googleLogin();
   }
+
+  /**
+   * @author Ivelin Ivanov
+   * @param {}
+   * @description logout the user
+   */
 
   logout() {
    this.auth.signOut();
   }
+
+  /**
+   * @author Ivelin Ivanov
+   * @param {}
+   * @description scale the width
+   */
 
   ngOnDestroy(): void {
     this.mobileQuery.removeListener(this._mobileQueryListener);

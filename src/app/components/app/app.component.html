@@ -3,8 +3,8 @@
       <button color="accent" mat-icon-button (click)="snav.toggle()"><mat-icon>menu</mat-icon></button>
       <h1 class="example-app-name">Firebase Notes App</h1>
       <span class="example-spacer"></span>
-      <button mat-icon-button>
-        <mat-icon color="accent" class="example-icon">supervisor_account</mat-icon>
+      <button mat-button color="accent" routerLink="/items">
+          Notes
       </button>
     </mat-toolbar>
   
@@ -31,8 +31,12 @@
               <!-- User logged in -->
               <ng-template #authenticated>
                 <div *ngIf="auth.user | async as user" style="padding:10px;color:white">
-                  <img mat-card-avatar class="card-img-top" [src]="user.photoURL || 'https://api.adorable.io/avatars/109/fire.png'" width=50px>
+                  <img mat-card-avatar style="display: block;
+                  margin-left: auto;
+                  margin-right: auto;
+                 " class="card-img-top" [src]="user.photoURL || 'https://api.adorable.io/avatars/109/fire.png'" width=50px>
                   <!-- <p class="text-truncate">UID: {{ user.uid }}</p> -->
+                  <h2>{{ user.displayName }}</h2>
                   <h3>{{ user.email }}</h3>
                   <button mat-raised-button (click)="logout()" color="accent">Logout</button>
                 </div>
