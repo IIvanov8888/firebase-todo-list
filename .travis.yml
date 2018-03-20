@@ -15,8 +15,7 @@ script:
 
 after_success:
   - firebase use todo-list-94220
-  - firebase deploy --token $FIREBASE_TOKEN
-
+  - firebase deploy --token "$FIREBASE_TOKEN"
 notifications:
   email:
     on_failure: change
