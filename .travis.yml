@@ -14,6 +14,7 @@ script:
   - ng build --prod
 
 after_success:
+  - firebase use todo-list-94220
   - firebase deploy --token $FIREBASE_TOKEN
 
 notifications:
