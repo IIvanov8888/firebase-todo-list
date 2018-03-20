@@ -1,12 +1,30 @@
-<mat-form-field class="example-full-width">
-      <input matInput placeholder="Whats on your head?" [(ngModel)]="content">
-</mat-form-field>
-<button mat-raised-button color="primary" (click)="createNote()" [disabled]="content?.length < 2 || content?.length > 200">Add Note</button>
-<hr>
-<mat-list>
-    <h3 mat-subheader>Notes</h3>
-    <div *ngFor="let item of items | async">
-      <app-item-detail [item]="item"></app-item-detail>
+<mat-card class="card-demo">
+  <mat-card-title>List of Notes</mat-card-title>
+  <mat-card-subtitle>
+  </mat-card-subtitle>
+  <mat-card-content>
+    <div class="containerX">
+      <div class="box">
+        <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px"
+             style="height:100%;width:100%;">
+          <div fxFlex>
+            <mat-form-field class="example-full-width">
+              <input matInput placeholder="Whats on your head?" [(ngModel)]="content">
+            </mat-form-field>
+            <button mat-raised-button color="primary" (click)="createNote()" [disabled]="content?.length < 2 || content?.length > 200">Add Note</button>
+            <hr>
+            <mat-list>
+                <h3 mat-subheader>Notes</h3>
+                <div *ngFor="let item of items | async">
+                  <app-item-detail [item]="item"></app-item-detail>
+                </div>
+            </mat-list>
+          </div>
+        </div>
+      </div>
     </div>
-</mat-list>
+  </mat-card-content>
+  <mat-card-footer>
+  </mat-card-footer>
+</mat-card>
 

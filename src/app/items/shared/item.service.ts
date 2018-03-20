@@ -32,7 +32,7 @@ export class ItemService {
     return this.notesCollection.snapshotChanges().map((actions) => {
       return actions.map((a) => {
         const data = a.payload.doc.data() as Item;
-        return { id: a.payload.doc.id, title: data.title, body: data.body };
+        return { id: a.payload.doc.id, title: data.title, body: data.body, time: data.time };
       });
     });
   }

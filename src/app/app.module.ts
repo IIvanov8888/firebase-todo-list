@@ -6,20 +6,21 @@ import { AngularFirestoreModule } from 'angularfire2/firestore';
 import { environment } from '../environments/environment';
 import { AppMaterialModule } from './material/material.module';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-
+import {FlexLayoutModule} from '@angular/flex-layout';
 
 import { AppComponent } from './components/app/app.component';
-import { AppNavbarComponent } from './components/app/navbar/app.navbar.component';
 import { ItemModule } from './items/shared/item.module';
 import { AppRoutingModule } from './routing/app-routing.module';
-
+import { UiModule } from './components/shared/ui.module';
+import { CoreModule } from './core/core.module';
 
 @NgModule({
   declarations: [
-    AppNavbarComponent,
-    AppComponent
   ],
   imports: [
+    CoreModule,
+    UiModule,
+    FlexLayoutModule,
     ItemModule,
     BrowserAnimationsModule,
     AppMaterialModule,
