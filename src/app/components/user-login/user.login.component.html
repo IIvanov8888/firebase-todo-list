@@ -1,22 +1,36 @@
-<div *ngIf="!(auth.user | async); else alreadyLoggedIn">
+<mat-card class="card-demo" style="margin: 10px;">
+    <mat-card-title>Social Login</mat-card-title>
+    <mat-card-subtitle></mat-card-subtitle>
+    <mat-card-content>
+      <div class="containerX">
+        <div class="box" style="height:200px;">
+          <div fxLayout="row" fxLayoutAlign="center center" fxLayoutGap="5px"
+               style="height:100%;padding: 5px;">
+            <div fxFlex>
+                <div *ngIf="!(auth.user | async); else alreadyLoggedIn">
 
-        <h3>Social Login</h3>
-
-          <button mat-button color="warn" (click)="signInWithGoogle()">Connect with Google</button>
-          <!--<h3>Anonymous Login</h3>
-      
-            <button (click)="signInAnonymously()" class="button button-info">
-              <i class="fa fa-user-secret fa-lg"></i> Connect Anonymously
-            </button>
-      
-          <hr>
-      
-          <user-form></user-form>-->
-      
+                    <h3>Social Login</h3>
+            
+                      <button mat-raised-button color="accent" (click)="signInWithGoogle()">Connect with Google</button>
+                      <!--<h3>Anonymous Login</h3>
+                        <button (click)="signInAnonymously()" class="button button-info">
+                          <i class="fa fa-user-secret fa-lg"></i> Connect Anonymously
+                        </button>
+                      <hr>
+                      <user-form></user-form>-->
+                  
+                  </div>
+                  
+            <ng-template #alreadyLoggedIn>
+                    <p class="text-success">
+                      Already logged in!
+                    </p>
+            </ng-template>
+            </div>
+          </div>
+        </div>
       </div>
-      
-      <ng-template #alreadyLoggedIn>
-        <p class="text-success">
-          Already logged in!
-        </p>
-</ng-template>
+    </mat-card-content>
+    <mat-card-footer>
+    </mat-card-footer>
+</mat-card>
