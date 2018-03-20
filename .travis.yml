@@ -23,7 +23,7 @@ script:
   - ng build --prod
 
 after_success:
-  - firebase deploy --token "$FIREBASE_TOKEN"
+  - firebase deploy --token "$FIREBASE_TOKEN" --project "todo-list-94220"
 notifications:
   email:
     on_failure: change
